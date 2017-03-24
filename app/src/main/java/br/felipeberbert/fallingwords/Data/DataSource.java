@@ -1,4 +1,4 @@
-package br.felipeberbert.fallingwords.Data;
+package br.felipeberbert.fallingwords.data;
 
 import android.content.Context;
 import android.widget.Toast;

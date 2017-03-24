@@ -1,8 +1,8 @@
-package br.felipeberbert.fallingwords.MenuActivity;
+package br.felipeberbert.fallingwords.menuactivity;
 
 import android.content.Context;
 
-import br.felipeberbert.fallingwords.Data.DataSource;
+import br.felipeberbert.fallingwords.data.DataSource;
 
 /**
  * Created by Felipe Berbert on 23/03/2017.

@@ -1,10 +1,10 @@
-package br.felipeberbert.fallingwords.GameActivity;
+package br.felipeberbert.fallingwords.gameactivity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import br.felipeberbert.fallingwords.Data.DataSource;
 import br.felipeberbert.fallingwords.R;
+import br.felipeberbert.fallingwords.data.DataSource;
 
 /**
  * Created by Felipe Berbert on 24/03/2017.

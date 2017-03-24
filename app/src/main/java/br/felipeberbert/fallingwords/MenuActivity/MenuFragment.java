@@ -1,4 +1,4 @@
-package br.felipeberbert.fallingwords.MenuActivity;
+package br.felipeberbert.fallingwords.menuactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,12 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import br.felipeberbert.fallingwords.R;
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
+import br.felipeberbert.fallingwords.gameactivity.GameActivity;
 
 /**
  * Created by Felipe Berbert on 23/03/2017.
@@ -56,9 +53,8 @@ public class MenuFragment extends Fragment implements MenuContract.View {
 
     @Override
     public void showGame() {
-//        Intent intent = new Intent(getContext(), );
-//        startActivity(intent);
-        Toast.makeText(getContext(), "Start", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), GameActivity.class);
+        startActivity(intent);
     }
 
     @Override

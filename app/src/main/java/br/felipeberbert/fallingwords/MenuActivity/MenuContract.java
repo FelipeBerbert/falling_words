@@ -1,4 +1,4 @@
-package br.felipeberbert.fallingwords.MenuActivity;
+package br.felipeberbert.fallingwords.menuactivity;
 
 import br.felipeberbert.fallingwords.BasePresenter;
 import br.felipeberbert.fallingwords.BaseView;

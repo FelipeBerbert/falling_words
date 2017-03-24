@@ -1,10 +1,10 @@
-package br.felipeberbert.fallingwords.MenuActivity;
+package br.felipeberbert.fallingwords.menuactivity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import br.felipeberbert.fallingwords.Data.DataSource;
 import br.felipeberbert.fallingwords.R;
+import br.felipeberbert.fallingwords.data.DataSource;
 
 public class MainActivity extends AppCompatActivity {
 

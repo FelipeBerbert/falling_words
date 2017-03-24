@@ -9,10 +9,11 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import br.felipeberbert.fallingwords.Data.DataSource;
+import br.felipeberbert.fallingwords.data.DataSource;
 import br.felipeberbert.fallingwords.model.Word;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Instrumentation test, which will execute on an Android device.
