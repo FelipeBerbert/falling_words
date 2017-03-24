@@ -14,6 +14,7 @@ public interface GameContract {
         void runNewGame();
         void loadNextWord();
         void registerAnswer(int answer);
+        void stopGame();
     }
 
     interface View extends BaseView<Presenter> {

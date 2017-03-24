@@ -2,12 +2,17 @@ package br.felipeberbert.fallingwords.gameactivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,19 +29,28 @@ public class GameFragment extends Fragment implements GameContract.View {
 
     private GameContract.Presenter mPresenter;
 
-    private TextView tvAnswer, tvQuestion;
+    private CardView cardAnswer;
+    private TextView tvAnswer, tvQuestion, tvScore;
     private Button btAnswerCorrect, btAnswerWrong;
     private LinearLayout llBackground;
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.stopGame();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game, container, false);
         tvAnswer = (TextView) rootView.findViewById(R.id.tv_answer);
         tvQuestion = (TextView) rootView.findViewById(R.id.tv_question);
+        tvScore = (TextView) rootView.findViewById(R.id.tv_score);
         btAnswerCorrect = (Button) rootView.findViewById(R.id.bt_answer_correct);
         btAnswerWrong = (Button) rootView.findViewById(R.id.bt_answer_wrong);
         llBackground = (LinearLayout) rootView.findViewById(R.id.ll_background);
+        cardAnswer = (CardView) rootView.findViewById(R.id.card_answer);
         setupViews();
         mPresenter.runNewGame();
         return rootView;
@@ -64,7 +78,6 @@ public class GameFragment extends Fragment implements GameContract.View {
     }
 
 
-
     @Override
     public void setPresenter(GameContract.Presenter presenter) {
         mPresenter = presenter;
@@ -79,11 +92,20 @@ public class GameFragment extends Fragment implements GameContract.View {
     @Override
     public void showAnswerWord(Word word) {
         tvAnswer.setText(word.getTextSpa());
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int height = size.y;
+
+        TranslateAnimation anim = new TranslateAnimation(0, 0, -cardAnswer.getHeight(), height);
+        anim.setDuration(3000);
+        anim.setInterpolator(new AccelerateInterpolator());
+        cardAnswer.startAnimation(anim);
     }
 
     @Override
     public void updateScore(int score) {
-
+        tvScore.setText(getString(R.string.msg_score, score));
     }
 
     @Override
@@ -94,12 +116,14 @@ public class GameFragment extends Fragment implements GameContract.View {
 
     @Override
     public void showPositiveFeedBack() {
-        llBackground.setBackgroundColor(getResources().getColor(R.color.green_light));
+//        llBackground.setBackgroundColor(getResources().getColor(R.color.green_light));
+
     }
 
     @Override
     public void showNegativeFeedBack() {
-        llBackground.setBackgroundColor(getResources().getColor(R.color.red_light));
+//        llBackground.setBackgroundColor(getResources().getColor(R.color.red_light));
+
     }
 
     @Override
@@ -110,17 +134,30 @@ public class GameFragment extends Fragment implements GameContract.View {
     @Override
     public void enableCorrectAnswerButton(boolean enabled) {
         btAnswerCorrect.setEnabled(enabled);
+        if (enabled) {
+            btAnswerCorrect.setBackgroundColor(getResources().getColor(R.color.green));
+        } else {
+            btAnswerCorrect.setBackgroundColor(getResources().getColor(R.color.green_light));
+        }
+
     }
 
     @Override
     public void enableWrongAnswerButton(boolean enabled) {
         btAnswerWrong.setEnabled(enabled);
+        if (enabled) {
+            btAnswerWrong.setBackgroundColor(getResources().getColor(R.color.red));
+        } else {
+            btAnswerWrong.setBackgroundColor(getResources().getColor(R.color.red_light));
+        }
+
     }
 
     @Override
     public void showResultDialog(boolean isHighScore, int score) {
         AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
         alertDialog.setTitle(getString(R.string.msg_game_over));
+        alertDialog.setCanceledOnTouchOutside(false);
         String message;
         if (isHighScore)
             message = getString(R.string.msg_new_high_score, score);

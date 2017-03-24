@@ -42,16 +42,19 @@
             </android.support.v7.widget.CardView>
         </FrameLayout>
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <android.support.v7.widget.CardView
+                android:id="@+id/card_answer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_margin="4dp">
+                android:layout_marginBottom="510dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true">
 
                 <TextView
                     android:id="@+id/tv_answer"
@@ -61,7 +64,7 @@
                     android:textSize="24sp"
                     tools:text="Spanish Word" />
             </android.support.v7.widget.CardView>
-        </FrameLayout>
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout

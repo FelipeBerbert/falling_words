@@ -34,6 +34,8 @@ public class GamePresenter implements GameContract.Presenter {
     private int mCurrentAnswer;
     private int currentWordIndex;
 
+    private boolean gameEnded;
+
     public GamePresenter(Context context, GameContract.View view, DataSource dataSource) {
         this.mContext = context;
         this.mView = view;
@@ -57,9 +59,8 @@ public class GamePresenter implements GameContract.Presenter {
 
     @Override
     public void loadNextWord() {
-        mView.enableCorrectAnswerButton(false);
-        mView.enableWrongAnswerButton(false);
-        if (currentWordIndex < TOTAL_STAGES) {
+        if (!gameEnded && currentWordIndex < TOTAL_STAGES) {
+
             mCurrentAnswer = NO_ANSWER;
             final Word questionWord = mDataSource.getmWordList().get(currentWordIndex++);
             final Word answerWord;
@@ -75,7 +76,7 @@ public class GamePresenter implements GameContract.Presenter {
             mView.hideFeedback();
             mView.enableCorrectAnswerButton(true);
             mView.enableWrongAnswerButton(true);
-            Observable.timer(6, TimeUnit.SECONDS, Schedulers.io())
+            Observable.timer(3, TimeUnit.SECONDS, Schedulers.io())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<Long>() {
@@ -90,6 +91,9 @@ public class GamePresenter implements GameContract.Presenter {
     }
 
     private void verifyAnswer(Word question, Word answer) {
+        if (gameEnded) return;
+        mView.enableCorrectAnswerButton(false);
+        mView.enableWrongAnswerButton(false);
         boolean wasCorrect = question.equals(answer);
         if (mCurrentAnswer == NO_ANSWER) {
             // If no answer was given, the score stays the same
@@ -101,7 +105,15 @@ public class GamePresenter implements GameContract.Presenter {
             mView.showNegativeFeedBack();
         }
         mView.updateScore(mGameScore);
-        loadNextWord();
+        Observable.timer(3, TimeUnit.SECONDS, Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        loadNextWord();
+                    }
+                });
     }
 
     private void finishGame() {
@@ -124,5 +136,10 @@ public class GamePresenter implements GameContract.Presenter {
         mCurrentAnswer = answer;
         mView.enableWrongAnswerButton(answer == ANSWER_CORRECT);
         mView.enableCorrectAnswerButton(answer == ANSWER_WRONG);
+    }
+
+    @Override
+    public void stopGame() {
+        gameEnded = true;
     }
 }
