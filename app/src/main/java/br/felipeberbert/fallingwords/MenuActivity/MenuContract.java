@@ -15,7 +15,7 @@ public interface MenuContract {
     }
 
     interface View extends BaseView<Presenter> {
-        void showHighscore();
+        void showHighscore(int score);
         void showGame();
     }
 }

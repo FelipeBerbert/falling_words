@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import br.felipeberbert.fallingwords.R;
 import br.felipeberbert.fallingwords.gameactivity.GameActivity;
@@ -20,13 +21,19 @@ public class MenuFragment extends Fragment implements MenuContract.View {
     private MenuContract.Presenter mPresenter;
 
     private Button mBtStartGame;
+    private TextView tvHighScore;
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.loadHighscore();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
         mBtStartGame = (Button) rootView.findViewById(R.id.bt_start_game);
+        tvHighScore = (TextView) rootView.findViewById(R.id.tv_high_score);
         setupViews();
         return rootView;
     }
@@ -47,8 +54,8 @@ public class MenuFragment extends Fragment implements MenuContract.View {
     }
 
     @Override
-    public void showHighscore() {
-
+    public void showHighscore(int score) {
+        tvHighScore.setText(getString(R.string.msg_high_score, score));
     }
 
     @Override

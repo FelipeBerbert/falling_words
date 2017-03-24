@@ -1,7 +1,9 @@
 package br.felipeberbert.fallingwords.menuactivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
+import br.felipeberbert.fallingwords.R;
 import br.felipeberbert.fallingwords.data.DataSource;
 
 /**
@@ -33,6 +35,7 @@ public class MenuPresenter implements MenuContract.Presenter {
 
     @Override
     public void loadHighscore() {
-
+        SharedPreferences sharedPref = mContext.getSharedPreferences(mContext.getString(R.string.app_name), Context.MODE_PRIVATE);
+        mView.showHighscore(sharedPref.getInt(mContext.getString(R.string.pref_high_score), 0));
     }
 }

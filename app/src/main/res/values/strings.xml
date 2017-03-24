@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">Falling Words</string>
-    <string name="error_load_words">There was a probleam loading the words</string>
-    <string name="bt_startgame">Start game</string>
-    <string name="pref_high_score">high_score</string>
     <string name="msg_game_over">Game Over</string>
     <string name="msg_score">Score: %d</string>
     <string name="msg_new_high_score">New high score: %d</string>
     <string name="msg_play_again">Play again</string>
     <string name="msg_leave">Leave</string>
+    <string name="msg_high_score">High score: %d</string>
+    <string name="bt_startgame">Start game</string>
     <string name="bt_correct">Right!</string>
     <string name="bt_wrong">Wrong!</string>
+    <string name="pref_high_score">high_score</string>
+    <string name="error_load_words">There was a probleam loading the words</string>
 </resources>
