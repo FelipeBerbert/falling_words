@@ -127,7 +127,6 @@ public class GameFragment extends Fragment implements GameContract.View {
 
     @Override
     public void showPositiveFeedBack() {
-//        llBackground.setBackgroundColor(getResources().getColor(R.color.green_light));
         ivPositive.setVisibility(View.VISIBLE);
         Observable.timer(2, TimeUnit.SECONDS, Schedulers.io())
                 .subscribeOn(Schedulers.io())
@@ -142,15 +141,14 @@ public class GameFragment extends Fragment implements GameContract.View {
 
     @Override
     public void showNegativeFeedBack() {
-//        llBackground.setBackgroundColor(getResources().getColor(R.color.red_light));
-        ivPositive.setVisibility(View.VISIBLE);
+        ivNegative.setVisibility(View.VISIBLE);
         Observable.timer(2, TimeUnit.SECONDS, Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
-                        ivPositive.setVisibility(View.GONE);
+                        ivNegative.setVisibility(View.GONE);
                     }
                 });
     }

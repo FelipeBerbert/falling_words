@@ -25,7 +25,7 @@ public class MenuPresenter implements MenuContract.Presenter {
 
     @Override
     public void unsubscribe() {
-
+        //todo unsubscribe observables
     }
 
     @Override

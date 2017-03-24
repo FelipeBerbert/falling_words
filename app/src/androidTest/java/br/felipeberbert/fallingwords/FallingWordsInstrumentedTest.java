@@ -23,6 +23,9 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(AndroidJUnit4.class)
 public class FallingWordsInstrumentedTest {
     @Test
+    /**
+     * Assert that the words json was successfully loaded
+     */
     public void loadWords() throws Exception {
         Context appContext = InstrumentationRegistry.getTargetContext();
         List<Word> wordList = DataSource.getInstance(appContext).getmWordList();

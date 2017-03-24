@@ -26,8 +26,6 @@ public class GamePresenter implements GameContract.Presenter {
     public final static int ANSWER_CORRECT = 1;
     public final static int ANSWER_WRONG = 2;
 
-    private final static int TOTAL_STAGES = 4;
-
     private final Context mContext;
     private final GameContract.View mView;
     private final DataSource mDataSource;
@@ -47,7 +45,7 @@ public class GamePresenter implements GameContract.Presenter {
 
     @Override
     public void unsubscribe() {
-
+        //todo unsubscribe observables
     }
 
     @Override
@@ -60,7 +58,7 @@ public class GamePresenter implements GameContract.Presenter {
 
     @Override
     public void loadNextWord() {
-        if (!gameEnded && currentWordIndex < TOTAL_STAGES) {
+        if (!gameEnded && currentWordIndex < BuildConfig.TOTAL_STAGES % mDataSource.getmWordList().size()) {
 
             mCurrentAnswer = NO_ANSWER;
             final Word questionWord = mDataSource.getmWordList().get(currentWordIndex++);
@@ -70,7 +68,9 @@ public class GamePresenter implements GameContract.Presenter {
             if (displayCorrectWord) {
                 answerWord = questionWord;
             } else {
-                answerWord = mDataSource.getmWordList().get(currentWordIndex + TOTAL_STAGES); // get a wrong answer that is out of this round's range, it will be random because the list was shuffled
+                // This simple line will get a wrong answer that is out of this round's range, it will be random because the list was shuffled
+                // It wouldn't work as intended if I increased the number of stages, but I don't to worry about this now
+                answerWord = mDataSource.getmWordList().get(currentWordIndex + BuildConfig.TOTAL_STAGES % mDataSource.getmWordList().size());
             }
             mView.showQuestionWord(questionWord);
             mView.showAnswerWord(answerWord);

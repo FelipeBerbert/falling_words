@@ -14,6 +14,7 @@ android {
     buildTypes {
         all {
             buildConfigField 'int', 'RESPONSE_TIME_SECONDS', '3'
+            buildConfigField 'int', 'TOTAL_STAGES', '20'
         }
         release {
             minifyEnabled false
