@@ -57,12 +57,14 @@ public class GamePresenter implements GameContract.Presenter {
 
     @Override
     public void loadNextWord() {
+        mView.enableCorrectAnswerButton(false);
+        mView.enableWrongAnswerButton(false);
         if (currentWordIndex < TOTAL_STAGES) {
             mCurrentAnswer = NO_ANSWER;
             final Word questionWord = mDataSource.getmWordList().get(currentWordIndex++);
             final Word answerWord;
             Random rand = new Random();
-            boolean displayCorrectWord = rand.nextBoolean();
+            boolean displayCorrectWord = rand.nextBoolean(); // Random to decide if the falling card will have the correct answer
             if (displayCorrectWord) {
                 answerWord = questionWord;
             } else {
@@ -98,6 +100,7 @@ public class GamePresenter implements GameContract.Presenter {
             mView.updateScore(--mGameScore);
             mView.showNegativeFeedBack();
         }
+        mView.updateScore(mGameScore);
         loadNextWord();
     }
 
