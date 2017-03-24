@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             fragment = new MenuFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, fragment).commit();
-            mPresenter = new MenuPresenter(this, fragment, DataSource.getInstance());
+            mPresenter = new MenuPresenter(this, fragment, DataSource.getInstance(this));
         }
     }
 }
