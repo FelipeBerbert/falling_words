@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import br.felipeberbert.fallingwords.BuildConfig;
 import br.felipeberbert.fallingwords.R;
 import br.felipeberbert.fallingwords.data.DataSource;
 import br.felipeberbert.fallingwords.model.Word;
@@ -76,7 +77,7 @@ public class GamePresenter implements GameContract.Presenter {
             mView.hideFeedback();
             mView.enableCorrectAnswerButton(true);
             mView.enableWrongAnswerButton(true);
-            Observable.timer(3, TimeUnit.SECONDS, Schedulers.io())
+            Observable.timer(BuildConfig.RESPONSE_TIME_SECONDS, TimeUnit.SECONDS, Schedulers.io())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<Long>() {

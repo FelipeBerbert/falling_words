@@ -14,12 +14,20 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.concurrent.TimeUnit;
+
+import br.felipeberbert.fallingwords.BuildConfig;
 import br.felipeberbert.fallingwords.R;
 import br.felipeberbert.fallingwords.menuactivity.MainActivity;
 import br.felipeberbert.fallingwords.model.Word;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Felipe Berbert on 23/03/2017.
@@ -32,6 +40,7 @@ public class GameFragment extends Fragment implements GameContract.View {
     private CardView cardAnswer;
     private TextView tvAnswer, tvQuestion, tvScore;
     private Button btAnswerCorrect, btAnswerWrong;
+    private ImageView ivPositive, ivNegative;
     private LinearLayout llBackground;
 
 
@@ -51,6 +60,8 @@ public class GameFragment extends Fragment implements GameContract.View {
         btAnswerWrong = (Button) rootView.findViewById(R.id.bt_answer_wrong);
         llBackground = (LinearLayout) rootView.findViewById(R.id.ll_background);
         cardAnswer = (CardView) rootView.findViewById(R.id.card_answer);
+        ivNegative = (ImageView) rootView.findViewById(R.id.iv_negative);
+        ivPositive = (ImageView) rootView.findViewById(R.id.iv_positive);
         setupViews();
         mPresenter.runNewGame();
         return rootView;
@@ -98,7 +109,7 @@ public class GameFragment extends Fragment implements GameContract.View {
         int height = size.y;
 
         TranslateAnimation anim = new TranslateAnimation(0, 0, -cardAnswer.getHeight(), height);
-        anim.setDuration(3000);
+        anim.setDuration(BuildConfig.RESPONSE_TIME_SECONDS * 1000);
         anim.setInterpolator(new AccelerateInterpolator());
         cardAnswer.startAnimation(anim);
     }
@@ -117,13 +128,31 @@ public class GameFragment extends Fragment implements GameContract.View {
     @Override
     public void showPositiveFeedBack() {
 //        llBackground.setBackgroundColor(getResources().getColor(R.color.green_light));
-
+        ivPositive.setVisibility(View.VISIBLE);
+        Observable.timer(2, TimeUnit.SECONDS, Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        ivPositive.setVisibility(View.GONE);
+                    }
+                });
     }
 
     @Override
     public void showNegativeFeedBack() {
 //        llBackground.setBackgroundColor(getResources().getColor(R.color.red_light));
-
+        ivPositive.setVisibility(View.VISIBLE);
+        Observable.timer(2, TimeUnit.SECONDS, Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        ivPositive.setVisibility(View.GONE);
+                    }
+                });
     }
 
     @Override
