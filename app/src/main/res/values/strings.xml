@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Falling Words</string>
     <string name="error_load_words">There was a probleam loading the words</string>
+    <string name="bt_startgame">Start game</string>
 </resources>

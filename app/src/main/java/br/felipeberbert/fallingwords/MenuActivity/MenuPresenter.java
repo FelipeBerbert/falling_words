@@ -9,8 +9,16 @@ import br.felipeberbert.fallingwords.Data.DataSource;
  */
 
 public class MenuPresenter implements MenuContract.Presenter {
+    private final Context mContext;
+    private final MenuContract.View mView;
+    private final DataSource mDataSource;
 
     public MenuPresenter(Context context, MenuContract.View view, DataSource dataSource) {
+        this.mContext = context;
+        this.mView = view;
+        this.mDataSource = dataSource;
+
+        mView.setPresenter(this);
     }
 
     @Override
@@ -20,7 +28,7 @@ public class MenuPresenter implements MenuContract.Presenter {
 
     @Override
     public void startGame() {
-
+        mView.showGame();
     }
 
     @Override
